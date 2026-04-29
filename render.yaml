@@ -1,0 +1,14 @@
+# blueprint de Render (render.yaml)
+services:
+  - type: web
+    name: vr-tour-api
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ALLOWED_ORIGINS
+        # Deberás cambiar esto por tu URL de Vercel una vez que despliegues el frontend
+        value: "https://tu-dominio-en-vercel.vercel.app,http://localhost:3000"

@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build
+dist/
+.next/
+out/
+target/
+
+# Storage (user uploads)
+storage/originals/*
+storage/processed/*
+storage/thumbnails/*
+!storage/originals/.gitkeep
+!storage/processed/.gitkeep
+!storage/thumbnails/.gitkeep
+
+# Database
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
+.env.production
+
+# Go
+apps/api/tmp/
+
+# Rust
+crates/image-processor/target/
