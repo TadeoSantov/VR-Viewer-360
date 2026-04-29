@@ -1,5 +1,5 @@
 # Etapa 1: Compilar el procesador de imágenes en Rust
-FROM rust:1.80-slim-bookworm AS rust-builder
+FROM rust:slim-bookworm AS rust-builder
 WORKDIR /app
 
 # Copiamos solo la carpeta de crates
