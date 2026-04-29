@@ -148,7 +148,7 @@ export default function PublicTourViewer() {
   }
 
   return (
-    <div ref={wrapperRef} className="h-screen flex flex-col overflow-hidden bg-black">
+    <div ref={wrapperRef} className="fixed inset-0 h-[100dvh] w-full flex flex-col overflow-hidden bg-black">
       <div className="flex-1 relative">
         {sceneData && (
           <ViewerCanvas
