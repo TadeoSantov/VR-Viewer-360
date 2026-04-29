@@ -109,7 +109,8 @@ func main() {
 
 		// ── Protected project routes (token required) ────────────────────────
 		r.Route("/projects", func(r chi.Router) {
-			r.Use(authMiddleware)
+			// Auth temporalmente desactivado por peticion del usuario
+			// r.Use(authMiddleware)
 
 			r.Get("/", projectHandler.List)
 			r.Post("/", projectHandler.Create)

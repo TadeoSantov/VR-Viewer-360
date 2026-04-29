@@ -3,11 +3,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { api, type Project } from "@/lib/api";
-import { useAuth } from "@/lib/auth-context";
 
 export default function Dashboard() {
   const router = useRouter();
-  const { user, loading: authLoading, logout, isAuthenticated } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,28 +25,9 @@ export default function Dashboard() {
       setLoading(false);
     }
   }, []);
-
-  // Redirect to login if not authenticated
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
-      router.push("/auth");
-    }
-  }, [authLoading, isAuthenticated, router]);
-
-  useEffect(() => {
-    if (isAuthenticated) fetchProjects();
-  }, [isAuthenticated, fetchProjects]);
-
-  // Show spinner while checking auth
-  if (authLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-950">
-        <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) return null;
+    fetchProjects();
+  }, [fetchProjects]);
 
   const handleCreate = async () => {
     if (!newName.trim()) return;
@@ -84,18 +63,6 @@ export default function Dashboard() {
           <p className="mt-3 text-gray-400 text-lg">
             Selecciona un proyecto o crea uno nuevo
           </p>
-        </div>
-        {/* User badge + logout */}
-        <div className="flex items-center gap-3 pt-2">
-          <span className="text-sm text-gray-400">
-            👤 {user?.username}
-          </span>
-          <button
-            onClick={() => { logout(); router.push("/auth"); }}
-            className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
-          >
-            Cerrar sesión
-          </button>
         </div>
       </div>
 
