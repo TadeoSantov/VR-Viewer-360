@@ -233,8 +233,8 @@ export default function ProjectEditor() {
       />
 
       {/* Top bar */}
-      <div className="flex items-center justify-between px-4 py-3 bg-gray-900/80 border-b border-white/10 shrink-0">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between px-4 py-3 bg-gray-900/80 border-b border-white/10 shrink-0 gap-4 md:gap-0">
+        <div className="flex items-center gap-3 w-full md:w-auto">
           <button
             onClick={() => router.push("/")}
             className="p-2 rounded-lg hover:bg-white/10 transition-colors"
@@ -251,10 +251,10 @@ export default function ProjectEditor() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="px-3 py-1.5 text-sm rounded-lg bg-white/10 hover:bg-white/15 transition-colors"
+            className="flex-1 md:flex-none px-3 py-1.5 text-sm rounded-lg bg-white/10 hover:bg-white/15 transition-colors text-center"
             disabled={uploading}
           >
             {uploading ? "Subiendo..." : "Subir Escenas"}
@@ -262,7 +262,7 @@ export default function ProjectEditor() {
           {sceneData && (
             <button
               onClick={() => setEditMode(!editMode)}
-              className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+              className={`flex-1 md:flex-none px-3 py-1.5 text-sm rounded-lg transition-colors text-center ${
                 editMode
                   ? "bg-blue-600 text-white"
                   : "bg-white/10 hover:bg-white/15"
@@ -280,11 +280,11 @@ export default function ProjectEditor() {
                 setProject(updated);
               } catch {}
             }}
-            className={`px-3 py-1.5 text-xs rounded-lg transition-colors ${
-              project.isPublished
-                ? "bg-green-500/15 text-green-400 hover:bg-green-500/25"
-                : "bg-gray-500/15 text-gray-400 hover:bg-gray-500/25"
-            }`}
+            className={`flex-1 md:flex-none px-3 py-1.5 text-sm md:text-xs rounded-lg transition-colors text-center ${
+                project.isPublished
+                  ? "bg-green-500/15 text-green-400 hover:bg-green-500/25"
+                  : "bg-gray-500/15 text-gray-400 hover:bg-gray-500/25"
+              }`}
           >
             {project.isPublished ? "Publicado" : "Borrador"}
           </button>
@@ -292,7 +292,7 @@ export default function ProjectEditor() {
             <a
               href={`/tours/${project.slug}`}
               target="_blank"
-              className="px-3 py-1.5 text-xs rounded-lg bg-purple-500/15 text-purple-400 hover:bg-purple-500/25 transition-colors"
+              className="flex-1 md:flex-none px-3 py-1.5 text-sm md:text-xs rounded-lg bg-purple-500/15 text-purple-400 hover:bg-purple-500/25 transition-colors text-center"
             >
               Ver Tour
             </a>
@@ -301,10 +301,10 @@ export default function ProjectEditor() {
       </div>
 
       {/* Viewer area */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex flex-col-reverse md:flex-row overflow-hidden">
         {/* Scene sidebar */}
         {scenes.length > 0 && (
-          <div className="w-52 bg-gray-900/60 border-r border-white/10 flex flex-col shrink-0">
+          <div className="w-full md:w-52 h-40 md:h-full bg-gray-900/60 border-t md:border-t-0 md:border-r border-white/10 flex flex-col shrink-0">
             <div className="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider border-b border-white/5">
               Escenas ({scenes.length})
             </div>
