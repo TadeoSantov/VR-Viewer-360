@@ -14,7 +14,7 @@ WORKDIR /app
 # Copiamos la carpeta del API
 COPY apps/api/ apps/api/
 WORKDIR /app/apps/api
-RUN go mod download
+RUN go mod tidy
 # Compilamos el ejecutable de Go
 RUN go build -o /app/api-server .
 
