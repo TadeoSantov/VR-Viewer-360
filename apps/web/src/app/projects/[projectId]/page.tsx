@@ -85,18 +85,27 @@ export default function ProjectEditor() {
   }, [loadHotspots]);
 
   const handleFileUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
 
     setUploading(true);
     try {
-      const scene = await api.scenes.upload(projectId, file, file.name.replace(/\.[^.]+$/, ""));
-      setScenes((prev) => [...prev, scene]);
-      setActiveSceneId(scene.id);
-      setSceneData(sceneToViewerData(scene));
-      setHotspots([]);
+      const newScenes: Scene[] = [];
+      for (const file of files) {
+        const scene = await api.scenes.upload(projectId, file, file.name.replace(/\.[^.]+$/, ""));
+        newScenes.push(scene);
+      }
+      
+      setScenes((prev) => [...prev, ...newScenes]);
+      
+      // Auto-switch to the first uploaded scene
+      if (newScenes.length > 0) {
+        setActiveSceneId(newScenes[0].id);
+        setSceneData(sceneToViewerData(newScenes[0]));
+        setHotspots([]);
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Upload failed");
+      setError(err instanceof Error ? err.message : "Error al subir escenas");
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -218,6 +227,7 @@ export default function ProjectEditor() {
         ref={fileInputRef}
         type="file"
         accept="image/*"
+        multiple
         className="hidden"
         onChange={handleFileUpload}
       />
@@ -247,7 +257,7 @@ export default function ProjectEditor() {
             className="px-3 py-1.5 text-sm rounded-lg bg-white/10 hover:bg-white/15 transition-colors"
             disabled={uploading}
           >
-            {uploading ? "Subiendo..." : "Subir Escena"}
+            {uploading ? "Subiendo..." : "Subir Escenas"}
           </button>
           {sceneData && (
             <button
@@ -369,7 +379,7 @@ export default function ProjectEditor() {
                   onClick={() => fileInputRef.current?.click()}
                   className="px-6 py-3 bg-blue-600 rounded-xl font-semibold hover:bg-blue-500 transition-colors text-white"
                 >
-                  Subir Escena
+                  Subir Escenas
                 </button>
               </div>
             </div>
